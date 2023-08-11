@@ -12,7 +12,6 @@ const LayoutWrapper = styled.div`
     ${({ theme }) => theme.convertPxToVw(52)};
   background-color: ${({ theme }) => theme.color.ebonyClay};
   width: ${({ theme }) => theme.convertPxToVw(375)};
-  border-radius: ${({ theme }) => theme.convertPxToVw(40)};
   box-shadow: 
     ${({ theme }) => theme.convertPxToVw(40)}
     ${({ theme }) => theme.convertPxToVw(40)}
@@ -22,8 +21,9 @@ const LayoutWrapper = styled.div`
   overflow: hidden;
   
   @media (width > ${BreakPoint.Mobile}) {
-    height: 81.2vh;
-    width: 37.75vh;
+    height: 812px;
+    width: 375px;
+    border-radius: ${({ theme }) => theme.convertPxToVw(40)};
   }
 `
 

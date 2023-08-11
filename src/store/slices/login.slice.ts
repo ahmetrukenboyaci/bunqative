@@ -1,35 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { UserType } from '../../pages/types/types'
 
-const initialState: { users: UserType[], isLoading: boolean } = {
-  users: [{
-    id: -1,
-    name: '',
-    last_seen_at: '',
-  }],
+const initialState: { id: number, username: string, password: string, token: string, isLoading: boolean } = {
+  id: 1,
+  username: '',
+  password: '',
+  token: '',
   isLoading: false
 };
 
-const userSlice = createSlice({
-  name: 'user',
+const loginSlice = createSlice({
+  name: 'login',
   initialState,
   reducers: {
-    fetchUsers: (state) => {
+    login: (state, action) => {
+      state.username = action.payload.username;
+      state.username = action.payload.password;
       state.isLoading = true;
     },
-    fetchUsersSuccess: (state, action) => {
-      state.users = action.payload;
+    loginSuccess: (state, action) => {
+      state.username = action.payload.token;
       state.isLoading = false;
     },
-    fetchUsersFail: (state) => {
+    loginFail: (state) => {
       state.isLoading = false;
     },
   }
 });
 
 export const {
-  fetchUsers,
-  fetchUsersSuccess,
-  fetchUsersFail
-} = userSlice.actions;
-export default userSlice.reducer;
+  login,
+  loginSuccess,
+  loginFail
+} = loginSlice.actions;
+export default loginSlice.reducer;

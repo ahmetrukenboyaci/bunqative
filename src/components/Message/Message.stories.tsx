@@ -42,6 +42,6 @@ export const OthersInGroup = Template.bind({});
 OthersInGroup.args = {
   text: 'I commented on Figma, I want to add some fancy icons. Do you have any icon set?',
   isInGroup: true,
-  owner: 'Bożenka Malina',
+  owner: 2,
   date: '2023-07-21T08:07:37.000000Z'
 };

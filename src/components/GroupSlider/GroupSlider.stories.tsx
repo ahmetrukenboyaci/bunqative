@@ -27,9 +27,9 @@ export const Default = Template.bind({});
 
 Default.args = {
   groups: [
-    <Group id={1} text={'Football Team'} newMessageCount={25} />,
-    <Group id={2} text={'Family'} newMessageCount={3} />,
-    <Group id={3} text={'School'} newMessageCount={13} />,
-    <Group id={4} text={'Business'} newMessageCount={0} />,
+    { id: 1, name: 'Football Team' },
+    { id: 2, name: 'Family' },
+    { id: 3, name: 'School' },
+    { id: 4, name: 'Business' },
   ]
 };

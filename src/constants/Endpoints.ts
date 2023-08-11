@@ -7,6 +7,7 @@ const ENDPOINT = Object.freeze({
   CONVERSATION_READ: (userId: number, conversationId: number)=>  `/user/${userId}/conversation/${conversationId}`,
   MESSAGE_CREATE: (userId: number, conversationId: number)=>  `/user/${userId}/conversation/${conversationId}/message`,
   MESSAGE_LISTING: (userId: number, conversationId: number)=>  `/user/${userId}/conversation/${conversationId}/message`,
+  LOGIN: '/login',
 });
 
 export { ENDPOINT };

@@ -1,7 +1,6 @@
 interface GroupProps {
   id: number;
-  text: string;
-  newMessageCount: number;
+  name: string;
   editable?: boolean;
 }
 

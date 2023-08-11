@@ -9,33 +9,42 @@ import CreateChatPage from './pages/CreatChat/CreateChat.page'
 import CreateChatroomPage from './pages/CreatChatroom/CreateChatroom.page'
 import LoginPage from './pages/Login/Login.page'
 import ChatBoxPage from './pages/ChatBox/ChatBox.page'
+import Cookies from 'js-cookie'
 
-const browserRouter = (): ReturnType<typeof createBrowserRouter> =>
-  createBrowserRouter([
-          {
-            path: ROUTE.ROOT,
-            element: <HomePage />,
-          },
-          {
-            path: ROUTE.CREATE_CHAT,
-            element: <CreateChatPage />,
-          },
-          {
-            path: ROUTE.CREATE_GROUP,
-            element: <CreateChatroomPage />,
-          },
-          {
-            path: ROUTE.LOGIN,
-            element: <LoginPage />,
-          },
-          {
-            path: `${ROUTE.CONVERSATION}/:id`,
-            element: <ChatBoxPage />,
-          },
+const browserRouter = (isUserLoggedIn: boolean): ReturnType<typeof createBrowserRouter> =>
+  createBrowserRouter(isUserLoggedIn ? [
+    {
+      path: ROUTE.ROOT,
+      element: <HomePage />,
+    },
+    {
+      path: '*',
+      element: <HomePage />,
+    },
+    {
+      path: ROUTE.CREATE_CHAT,
+      element: <CreateChatPage />,
+    },
+    {
+      path: ROUTE.CREATE_GROUP,
+      element: <CreateChatroomPage />,
+    },
+    {
+      index: true,
+      path: `${ROUTE.CONVERSATION}/:id`,
+      element: <ChatBoxPage />,
+    },
+  ] : [
+    {
+      path: ROUTE.LOGIN,
+      element: <LoginPage />,
+    }
   ]);
 
 const AppRouter: React.FC = () => {
-  return <RouterProvider router={browserRouter()} />;
+  const isUserLoggedIn = !!Cookies.get('jwt')
+
+  return <RouterProvider router={browserRouter(true)} />;
 };
 
 export default AppRouter;

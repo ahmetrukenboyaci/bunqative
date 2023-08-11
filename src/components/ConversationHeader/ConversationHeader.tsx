@@ -27,10 +27,10 @@ const ConversationHeader: FC<ConversationHeaderProps> = ({
       <S.Logo onClick={handleLogoClick} isGroup={isGroup} src={Logo} alt={'logo'} />
       {users.map((user, i) => (
         <S.Initial key={i} isGroup={isGroup}>
-          {user[0]}
+          {user ? user : ''}
         </S.Initial>
       ))}
-      {!isGroup && <S.UserName>{users[0]}</S.UserName>}
+      {!isGroup && <S.UserName>{users ? users[0] : ''}</S.UserName>}
     </S.Wrapper>
   )
 }

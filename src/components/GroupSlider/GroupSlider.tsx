@@ -5,6 +5,9 @@ import Slider from 'react-slick';
 /** Types */
 import { GroupSliderProps } from './GroupSlider.types';
 
+/** Components */
+import Group from '../Group/Group'
+
 /** Styles */
 import * as S from './GroupSlider.styled';
 import 'slick-carousel/slick/slick.css';
@@ -23,7 +26,13 @@ const GroupSlider: FC<GroupSliderProps> = ({ groups }) => {
   return (
     <S.Wrapper>
       <Slider {...settings}>
-        {groups}
+        {groups && groups.map(group => (
+          <Group
+            key={group.id}
+            id={group.id}
+            name={group.name}
+          />
+        ))}
       </Slider>
     </S.Wrapper>
   );

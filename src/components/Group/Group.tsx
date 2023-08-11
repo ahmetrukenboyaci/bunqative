@@ -16,8 +16,7 @@ import * as S from './Group.styled';
 
 const Group: FC<GroupProps> = ({
   id,
-  text,
-  newMessageCount,
+  name,
   editable = false
 }) => {
   const navigate = useNavigate();
@@ -39,8 +38,7 @@ const Group: FC<GroupProps> = ({
           <img src={Close} alt={'close'} />
         </S.RemoveIcon>
       )}
-      {newMessageCount > 0 && !editable && <S.NewMessageCount>+{newMessageCount}</S.NewMessageCount>}
-      <S.Text>{text}</S.Text>
+      <S.Text>{name}</S.Text>
     </S.Wrapper>
   )
 }

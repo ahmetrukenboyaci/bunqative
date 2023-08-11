@@ -3,7 +3,7 @@ const ROUTE = Object.freeze({
   CREATE_CHAT: '/create-chat',
   CREATE_GROUP: '/create-group',
   CONVERSATION: '/conversation',
-  LOGIN: '/login',
+  LOGIN: '*',
 });
 
 export { ROUTE };

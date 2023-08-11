@@ -1,30 +1,26 @@
-import { put, select, takeEvery } from 'redux-saga/effects'
+import { put, takeEvery } from 'redux-saga/effects'
 import * as types from '../../constants/methodTypes';
 import { ENDPOINT } from '../../constants/Endpoints';
 import {
-  fetchMessages, fetchMessagesFail, fetchMessagesSuccess,
-} from '../slices/message.slice'
+  fetchUsers, fetchUsersFail, fetchUsersSuccess,
+} from '../slices/user.slice'
 import { request } from '../../utilities/request'
-import { MessageType } from '../../pages/types/types'
+import { UserType } from '../../pages/types/types'
 
 
-export function* getMessages(action) {
+export function* getUsers() {
   try {
-    const {
-      id: my_id
-    } = yield select((state) => state.login);
-
-    const messagesData: { data: MessageType[] } = yield request({
-      url: ENDPOINT.MESSAGE_LISTING(my_id, action.payload.conversation_id),
+    const messagesData: { data: UserType[] } = yield request({
+      url: ENDPOINT.USER_LISTING,
       methodType: types.GET,
     });
 
-    yield put(fetchMessagesSuccess(messagesData.data));
+    yield put(fetchUsersSuccess(messagesData.data));
   } catch (e) {
-    yield put(fetchMessagesFail());
+    yield put(fetchUsersFail());
   }
 }
 
-export function* watchMessage() {
-  yield takeEvery(fetchMessages, getMessages);
+export function* watchUser() {
+  yield takeEvery(fetchUsers, getUsers);
 }

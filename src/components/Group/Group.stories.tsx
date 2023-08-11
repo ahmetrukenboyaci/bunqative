@@ -26,23 +26,20 @@ export const Football = Template.bind({});
 
 Football.args = {
   id: 9,
-  text: 'football team',
-  newMessageCount: 25
+  name: 'football team',
 };
 
 export const Business = Template.bind({});
 
 Business.args = {
   id: 8,
-  text: 'business',
-  newMessageCount: 0
+  name: 'business',
 };
 
 export const Editable = Template.bind({});
 
 Editable.args = {
   id: 8,
-  text: 'business',
-  newMessageCount: 0,
+  name: 'business',
   editable: true
 };

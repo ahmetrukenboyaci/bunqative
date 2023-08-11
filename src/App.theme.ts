@@ -2,7 +2,7 @@ import 'styled-components';
 
 export const theme = {
   color: {
-    ebonyClay: '#292F3F',
+    ebonyClay: '#292f3ff2',
     bayLeaf: '#7EAA92',
     riverBed: '#414756',
     shipCove: '#8294C4',

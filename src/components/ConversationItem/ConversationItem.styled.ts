@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { InitialProps } from './ConversationItem.types'
 
 const ConversationItemWrapper = styled(Link)`
   position: relative;
@@ -17,35 +16,15 @@ const ConversationItemInitialContainer = styled.div`
   width: ${({ theme }) => theme.convertPxToVw(54)};
 `;
 
-const ConversationItemNewMessageCount = styled.div`
+const ConversationItemInitial = styled.div`
   position: absolute;
-  left: 0;
-  top: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: ${({ theme }) => theme.convertPxToVw(34)};
   width: ${({ theme }) => theme.convertPxToVw(34)};
-  background-color: ${({ theme }) => theme.color.riverBed};
-  border-radius: 50%;
-  z-index: 1;
-
-  color: ${({ theme }) => theme.color.white};
-  font-family: Roboto, serif;
-  font-size: ${({ theme }) => theme.convertPxToVw(15)};
-  letter-spacing: ${({ theme }) => theme.convertPxToVw(1)};
-`;
-
-const ConversationItemInitial = styled.div<InitialProps>`
-  position: absolute;
-  right: ${({ theme, isAlone }) => theme.convertPxToVw(isAlone ? '50%' : '0')};
-  bottom: ${({ theme, isAlone }) => theme.convertPxToVw(isAlone ? '50%' : '0')};
-  transform: ${({ isAlone }) => isAlone ? 'translate(50%, 50%)' : 'unset'};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: ${({ theme, isAlone }) => theme.convertPxToVw(isAlone ? 45 : 34)};
-  width: ${({ theme, isAlone }) => theme.convertPxToVw(isAlone ? 45 : 34)};
   background-color: ${({ theme }) => theme.color.shipCove};
   border-radius: 50%;
 
@@ -97,7 +76,6 @@ const ConversationItemDate = styled.div`
 
 export {
   ConversationItemWrapper as Wrapper,
-  ConversationItemNewMessageCount as NewMessageCount,
   ConversationItemInitialContainer as InitialContainer,
   ConversationItemInitial as Initial,
   ConversationItemLastMessageContainer as LastMessageContainer,

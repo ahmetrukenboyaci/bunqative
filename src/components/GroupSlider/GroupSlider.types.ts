@@ -1,7 +1,7 @@
-import { ReactNode } from 'react'
+import { GroupProps } from '../Group/Group.types'
 
 interface GroupSliderProps {
-  groups: ReactNode[]
+  groups?: GroupProps[]
 }
 
 export type { GroupSliderProps };

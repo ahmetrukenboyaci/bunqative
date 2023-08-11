@@ -16,14 +16,14 @@ const useMetricConverter = (): ReturnType => {
 
   const convertPxToVw = useCallback(
     (sizeInPx: number | string): string => {
-      const viewportWidth = isMobile
-        ? DeviceSizeMapping.Mobile
-        : DeviceSizeMapping.Desktop;
+      const viewportWidth = DeviceSizeMapping.Mobile;
+
       if (typeof sizeInPx === 'number') {
+        if (!isMobile) return `${sizeInPx}px`;
         const itemSize = sizeInPx * 100;
         const sizeInVw = itemSize / viewportWidth;
         return `${sizeInVw}vw`;
-      } else return sizeInPx;
+      } else return `${sizeInPx}vw`;
     },
     [isMobile]
   );

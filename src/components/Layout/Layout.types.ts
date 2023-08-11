@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 interface LayoutProps {
   header?: string;
-  users?: string[];
+  users?: number[];
   isConversation?: boolean;
   children: ReactNode;
 }

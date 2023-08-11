@@ -25,18 +25,18 @@ const Template: StoryFn<ConversationHeaderProps> = (args) => (
 export const OneToOne = Template.bind({});
 
 OneToOne.args = {
-  users: ['Bożenka Malina']
+  users: [1]
 };
 
 export const Group = Template.bind({});
 
 Group.args = {
   users: [
-    'Bożenka Malina',
-    'Odeusz Piotrowski',
-    'Krysia Eurydyka',
-    'jarosław kowalski',
-    'Krysia Eurydyka',
-    'MC Bastek'
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
   ]
 };

@@ -19,10 +19,10 @@ const Layout: FC<LayoutProps> = ({
 }) => {
   return (
     <S.Wrapper>
-      {isConversation && users ? (
+      {isConversation && users?.length ? (
         <ConversationHeader users={users} />
       ) : (
-        <PageHeader name={header || ''} />
+        !isConversation && <PageHeader name={header || ''} />
       )}
       {children}
     </S.Wrapper>

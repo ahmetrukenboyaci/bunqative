@@ -25,9 +25,8 @@ const MessageText = styled.div`
   text-transform: capitalize;
 `;
 
-const MessageInitial = styled.div`
+const MessageInitial = styled.div<MessageOwnerProps>`
   position: absolute;
-  right: ${({ theme }) => theme.convertPxToVw(-10)};
   bottom: 0;
   display: flex;
   justify-content: center;
@@ -36,6 +35,16 @@ const MessageInitial = styled.div`
   width: ${({ theme }) => theme.convertPxToVw(24)};
   background-color: ${({ theme }) => theme.color.shipCove};
   border-radius: 50%;
+  ${({ theme, isMine }) =>
+    isMine ?
+      css`
+        left: ${({ theme }) => theme.convertPxToVw(-10)};
+      `
+      :
+      css`
+        right: ${({ theme }) => theme.convertPxToVw(-10)};
+      `
+  }
 
   color: ${({ theme }) => theme.color.white};
   font-family: Roboto, serif;

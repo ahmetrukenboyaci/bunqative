@@ -1,5 +1,5 @@
 interface ConversationHeaderProps {
-  users: string[];
+  users: number[];
 }
 
 type ConversationHeaderIsGroup = {

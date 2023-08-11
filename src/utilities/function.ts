@@ -1,4 +1,6 @@
 import moment from 'moment';
+import Cookies from 'js-cookie'
+import jwt_decode from 'jwt-decode'
 
 export const convertDate = (date: string): string => {
   const second = 1000;
@@ -50,4 +52,11 @@ export const convertMessageDate = (date: string): string => {
     return moment(date).format('HH[:]MM')
   else
     return moment(date).format('HH[:]MM')
+}
+
+export const getMyId = () => {
+  const token = Cookies?.get('jwt') || '';
+  // const decoded: { name: string, id: number } = jwt_decode(token);
+
+  return 1;
 }

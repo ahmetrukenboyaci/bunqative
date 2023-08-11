@@ -1,6 +1,6 @@
 interface MessageProps {
   text: string;
-  owner: string;
+  owner?: number;
   date: string;
   isMine?: boolean;
   isInGroup?: boolean;

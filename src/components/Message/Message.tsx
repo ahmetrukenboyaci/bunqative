@@ -4,9 +4,11 @@ import React, { FC } from 'react';
 /** Types */
 import { MessageProps } from './Message.types';
 
+/** Utils */
+import { convertMessageDate } from '../../utilities/function'
+
 /** Styles */
 import * as S from './Message.styled';
-import { convertMessageDate } from '../../utilities/function'
 
 const Message: FC<MessageProps> = ({
   text,
@@ -18,7 +20,7 @@ const Message: FC<MessageProps> = ({
   return (
     <S.Wrapper isMine={isMine}>
       <S.Text>{text}</S.Text>
-      {isInGroup && <S.Initial>{owner[0]}</S.Initial>}
+      {isInGroup && <S.Initial isMine={isMine}>{owner ? owner : ''}</S.Initial>}
       <S.Date isMine={isMine}>{convertMessageDate(date)}</S.Date>
     </S.Wrapper>
   )

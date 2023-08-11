@@ -15,17 +15,14 @@ import * as S from './ConversationItem.styled';
 
 const ConversationItem: FC<ConversationItemProps> = ({
   id,
-  newMessageCount,
   name,
   lastMessage,
   date,
 }) => {
-
   return (
     <S.Wrapper to={`${ROUTE.CONVERSATION}/${id}`}>
       <S.InitialContainer>
-        {newMessageCount && <S.NewMessageCount>+{newMessageCount}</S.NewMessageCount>}
-        <S.Initial isAlone={!newMessageCount}>{name[0]}</S.Initial>
+        <S.Initial>{name[0]}</S.Initial>
       </S.InitialContainer>
       <S.LastMessageContainer>
         <S.UserName>{name}</S.UserName>

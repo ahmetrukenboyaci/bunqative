@@ -1,146 +1,91 @@
 /** Dependencies */
-import React from 'react';
+import React, { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
+import { useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
 
 /** Components */
 import Layout from '../../components/Layout/Layout'
 import Input from '../../components/Input/Input'
 import Message from '../../components/Message/Message'
 
+/** Types */
+import { MessageType } from '../types/types'
+
+/** Utils */
+import { getMyId } from '../../utilities/function'
+import { request } from '../../utilities/request'
+
+/** Hooks */
+import { useAppSelector } from '../../hooks/useAppSelector'
+
+/** Store */
+import { fetchConversation } from '../../store/slices/conversation.slice'
+import { createMessage, fetchMessages } from '../../store/slices/message.slice'
+
+/** Constants */
+import { ENDPOINT } from '../../constants/Endpoints'
+import * as types from '../../constants/methodTypes'
+
 /** Styles */
 import * as S from './ChatBox.styled';
 
 const ChatBox = () => {
-  const my_id = 1;
+  const my_id = getMyId();
+  const { id } = useParams();
+  const dispatch = useDispatch();
 
-  const messages = [
-    {
-      "id": 27,
-      "user_id": 1,
-      "user_name": "Ahmet Ruken",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:51.000000Z"
-    },
-    {
-      "id": 26,
-      "user_id": 9,
-      "user_name": "wessel",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:50.000000Z"
-    },
-    {
-      "id": 25,
-      "user_id": 9,
-      "user_name": "wessel",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:50.000000Z"
-    },
-    {
-      "id": 24,
-      "user_id": 9,
-      "user_name": "wessel",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:49.000000Z"
-    },
-    {
-      "id": 23,
-      "user_id": 9,
-      "user_name": "wessel",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:47.000000Z"
-    },
-    {
-      "id": 22,
-      "user_id": 9,
-      "user_name": "wessel",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:47.000000Z"
-    },
-    {
-      "id": 21,
-      "user_id": 1,
-      "user_name": "Ahmet Ruken",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:46.000000Z"
-    },
-    {
-      "id": 20,
-      "user_id": 9,
-      "user_name": "wessel",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:46.000000Z"
-    },
-    {
-      "id": 19,
-      "user_id": 9,
-      "user_name": "wessel",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:45.000000Z"
-    },
-    {
-      "id": 18,
-      "user_id": 1,
-      "user_name": "Ahmet Ruken",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:45.000000Z"
-    },
-    {
-      "id": 17,
-      "user_id": 9,
-      "user_name": "wessel",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:44.000000Z"
-    },
-    {
-      "id": 16,
-      "user_id": 9,
-      "user_name": "wessel",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:44.000000Z"
-    },
-    {
-      "id": 15,
-      "user_id": 9,
-      "user_name": "wessel",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:44.000000Z"
-    },
-    {
-      "id": 14,
-      "user_id": 9,
-      "user_name": "wessel",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:43.000000Z"
-    },
-    {
-      "id": 13,
-      "user_id": 9,
-      "user_name": "wessel",
-      "text": "Hello, World!",
-      "sent_at": "2021-07-21T08:08:43.000000Z"
-    }
-  ];
+  const { selectedConversation } = useAppSelector(state => state.conversation);
+  const { messages } = useAppSelector(state => state.message);
 
-  const userNamesOtherThanMe = messages.filter(message => message.user_id !== my_id);
-  const userNames: string[] = userNamesOtherThanMe.map(message => message.user_name);
-  const users: string[] = Array.from(new Set(userNames));
+  const [userNames, setUserNames] = useState<number[]>([]);
+  const [messageText, setMessageText] = useState<string>();
+
+  const handleMessaging = (vl: string) => {
+    setMessageText(vl);
+  }
+
+  const handleSendMessage = () => {
+    selectedConversation && id && dispatch(createMessage({
+      conversation_id: id,
+      owner_id: my_id,
+      text: messageText,
+      sent_at: (new Date()).toISOString()
+    }))
+  }
+
+  useEffect(() => {
+    toast.info("Wait until your messages come!", {
+      toastId: 'toast_id'
+    });
+    dispatch(fetchConversation({ id }));
+    dispatch(fetchMessages({ id }));
+  }, []);
+
+  useEffect(() => {
+    setUserNames(selectedConversation?.members?.map((member: number) => member) || [])
+  }, [selectedConversation])
 
   return (
-    <Layout isConversation users={users}>
+    <Layout isConversation users={userNames}>
       <S.MessagesContainer>
-        {messages.map(message => (
+        {messages?.length > 0 && messages.map((message: MessageType) => (
           <Message
             key={message.id}
             text={message.text}
-            owner={message.user_name}
-            isMine={message.user_id === my_id}
+            owner={message?.owner_id}
+            isMine={message.owner_id === my_id}
             date={message.sent_at}
+            isInGroup={!!selectedConversation?.members?.length && selectedConversation.members.length > 1}
           />
         ))}
       </S.MessagesContainer>
       <S.FormContainer>
         <Input
-          onChange={() => console.log('')}
-          onEnter={() => console.log('')}
+          onChange={handleMessaging}
+          onEnter={handleSendMessage}
+          defaultValue={messageText}
           placeholder={'Write'}
           type={'message'}
         />

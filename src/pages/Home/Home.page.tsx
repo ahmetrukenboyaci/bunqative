@@ -1,45 +1,48 @@
 /** Dependencies */
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux'
 
 /** Constants */
-import { CONVERSATIONS } from '../../constants/MockData'
-import { ROUTE } from '../../constants/Routes'
+import { ROUTE } from '../../constants/Routes';
 
 /** Components */
-import Layout from '../../components/Layout/Layout'
-import Input from '../../components/Input/Input'
-import Button from '../../components/Button/Button'
-import GroupSlider from '../../components/GroupSlider/GroupSlider'
-import Group from '../../components/Group/Group'
-import ConversationItem from '../../components/ConversationItem/ConversationItem'
+import Layout from '../../components/Layout/Layout';
+import Input from '../../components/Input/Input';
+import Button from '../../components/Button/Button';
+import GroupSlider from '../../components/GroupSlider/GroupSlider';
+import ConversationItem from '../../components/ConversationItem/ConversationItem';
 
 /** Icons */
 import Add from '../../assets/icons/add.svg';
 
+/** Store */
+import { fetchConversations } from '../../store/slices/conversation.slice';
+import { useAppSelector } from '../../hooks/useAppSelector';
+
 /** Types */
-import { ConversationType } from '../types/types'
+import { ConversationType } from '../types/types';
 
 /** Styles */
 import * as S from './Home.styled';
 
 const Home = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [conversationsSearchResult, setConversationsSearchResult] =
-    useState<ConversationType[]>(CONVERSATIONS);
 
-  const groups = [
-    <Group id={1} text={'Football Team'} newMessageCount={25} />,
-    <Group id={2} text={'Family'} newMessageCount={3} />,
-    <Group id={3} text={'School'} newMessageCount={13} />,
-    <Group id={4} text={'Business'} newMessageCount={0} />,
-  ];
+  const { conversations, groups } = useAppSelector(state => state.conversation);
+
+  const [conversationsSearchResult, setConversationsSearchResult] =
+    useState<ConversationType[]>();
 
   const sortedConversations = () => {
-    return CONVERSATIONS.sort((conversationA, conversationB) => {
-      // @ts-ignore
-      return (new Date(conversationB.last_seen_at)) - (new Date(conversationA.last_seen_at))
-    });
+    if (conversations?.length)
+      return conversations.sort((conversationA, conversationB) => {
+        // @ts-ignore
+        return (new Date(conversationB.last_seen_at)) - (new Date(conversationA.last_seen_at))
+      });
+    return [];
   }
 
   const handleSearch = (searchTerm: string) => {
@@ -51,6 +54,18 @@ const Home = () => {
     else
       setConversationsSearchResult(searchResult);
   }
+
+  useEffect(() => {
+    toast.info("Wait until your friends come!", {
+      toastId: 'toast_id'
+    });
+
+    dispatch(fetchConversations())
+  }, [])
+
+  useEffect(() => {
+    handleSearch('');
+  }, [conversations]);
 
   return (
     <Layout header={'Ahmet Ruken'}>
@@ -72,9 +87,8 @@ const Home = () => {
             key={conversation.id}
             id={conversation.id}
             name={conversation.name}
-            lastMessage={conversation.message}
-            date={conversation.last_seen_at}
-            newMessageCount={conversation?.new_message_count}
+            lastMessage={conversation.last_message}
+            date={conversation.last_message_date}
           />
         ))}
       </S.ConversationsList>

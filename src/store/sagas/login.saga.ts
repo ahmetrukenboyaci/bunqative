@@ -2,25 +2,24 @@ import { put, takeEvery } from 'redux-saga/effects';
 import * as types from '../../constants/methodTypes';
 import { ENDPOINT } from '../../constants/Endpoints';
 import {
-  fetchUsers, fetchUsersFail, fetchUsersSuccess,
-} from '../slices/user.slice'
+  login, loginFail, loginSuccess,
+} from '../slices/login.slice'
 import { request } from '../../utilities/request'
-import { UserType } from '../../pages/types/types'
 
 
-export function* getUsers() {
+export function* signIn() {
   try {
-    const usersData: { data: UserType[] } = yield request({
-      url: ENDPOINT.USER_LISTING,
-      methodType: types.GET,
+    const { token }: { token: string } = yield request({
+      url: ENDPOINT.LOGIN,
+      methodType: types.POST,
     });
 
-    yield put(fetchUsersSuccess(usersData.data));
+    yield put(loginSuccess({ token }));
   } catch (e) {
-    yield put(fetchUsersFail());
+    yield put(loginFail());
   }
 }
 
-export function* watchUser() {
-  yield takeEvery(fetchUsers, getUsers);
+export function* watchLogin() {
+  yield takeEvery(login, signIn);
 }

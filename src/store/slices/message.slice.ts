@@ -1,38 +1,50 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ConversationType } from '../../pages/types/types'
+import { MessageType } from '../../pages/types/types'
 
-const initialState: { conversations: ConversationType[], isLoading: boolean } = {
-  conversations: [{
+const initialState: { messages: MessageType[], isLoading: boolean } = {
+  messages: [{
     id: -1,
-    name: '',
-    members: [],
-    last_message: '',
-    last_message_date: '',
-    is_group: false,
+    conversation_id: -1,
+    owner_id: -1,
+    text: '',
+    sent_at: '',
   }],
   isLoading: false
 };
 
-const conversationSlice = createSlice({
-  name: 'conversation',
+const messageSlice = createSlice({
+  name: 'message',
   initialState,
   reducers: {
-    fetchConversations: (state) => {
+    fetchMessages: (state, action) => {
       state.isLoading = true;
     },
-    fetchConversationsSuccess: (state, action) => {
-      state.conversations = action.payload;
+    fetchMessagesSuccess: (state, action) => {
+      state.messages = action.payload;
       state.isLoading = false;
     },
-    fetchConversationsFail: (state) => {
+    fetchMessagesFail: (state) => {
+      state.isLoading = false;
+    },
+    createMessage: (state, action) => {
+      state.isLoading = true;
+    },
+    createMessageSuccess: (state, action) => {
+      state.messages = action.payload;
+      state.isLoading = false;
+    },
+    createMessageFail: (state) => {
       state.isLoading = false;
     },
   }
 });
 
 export const {
-  fetchConversations,
-  fetchConversationsSuccess,
-  fetchConversationsFail
-} = conversationSlice.actions;
-export default conversationSlice.reducer;
+  fetchMessages,
+  fetchMessagesSuccess,
+  fetchMessagesFail,
+  createMessage,
+  createMessageSuccess,
+  createMessageFail
+} = messageSlice.actions;
+export default messageSlice.reducer;

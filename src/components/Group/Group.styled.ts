@@ -15,25 +15,6 @@ const GroupWrapper = styled.div`
           0 rgba(0, 0, 0, 0.45);
 `
 
-const GroupNewMessageCount = styled.div`
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: flex;
-  min-width: ${({ theme }) => theme.convertPxToVw(24)}; 
-  min-height: ${({ theme }) => theme.convertPxToVw(24)}; 
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  background-color: ${({ theme }) => theme.color.bayLeaf};
-
-  color: ${({ theme }) => theme.color.white};
-  font-family: Roboto, serif;
-  font-size: ${({ theme }) => theme.convertPxToVw(8)};
-  font-weight: 700;
-  letter-spacing: ${({ theme }) => theme.convertPxToVw(1)};
-`;
-
 const GroupRemoveIcon = styled.div`
   position: absolute;
   right: 0;
@@ -69,6 +50,5 @@ const GroupText = styled.div`
 export {
   GroupWrapper as Wrapper,
   GroupText as Text,
-  GroupNewMessageCount as NewMessageCount,
   GroupRemoveIcon as RemoveIcon,
 }
