@@ -1,67 +1,67 @@
 /** Dependencies */
-import React, { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Cookies from 'js-cookie'
-import { toast } from 'react-toastify'
+import React, { FC, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 /** Types */
-import { UserProps } from './User.types'
-import { ButtonColor } from '../Button/Button.types'
+import { UserProps } from './User.types';
+import { ButtonColor } from '../Button/Button.types';
 
 /** Constants */
-import { ROUTE } from '../../constants/Routes'
-import { ENDPOINT } from '../../constants/Endpoints'
-import * as types from '../../constants/methodTypes'
+import { ROUTE } from '../../constants/Routes';
 
 /** Components */
-import Button from '../Button/Button'
+import Button from '../Button/Button';
 
-/** Utils */
-import { request } from '../../utilities/request'
-import { getMyId } from '../../utilities/function'
+/** Store */
+import { createConversation } from '../../store/slices/conversation.slice';
 
+/** Hooks */
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 /** Icons */
-import Message from '../../assets/icons/message.svg'
-import Add from '../../assets/icons/add.svg'
-import Remove from '../../assets/icons/remove.svg'
+import Message from '../../assets/icons/message.svg';
+import Add from '../../assets/icons/add.svg';
+import Remove from '../../assets/icons/remove.svg';
 
 /** Styles */
-import * as S from './User.styled'
+import * as S from './User.styled';
 
 const User: FC<UserProps> = ({
-  id,
-  name,
-  isMessageItem = true,
-  isAdded = false,
-  onButtonClick
-}) => {
-  const my_id = getMyId();
+                               id,
+                               name,
+                               isMessageItem = true,
+                               isAdded = false,
+                               onButtonClick,
+                             }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const createConversation = () => {
-    const payload = {
-      user_ids: [id]
-    };
+  const [isButtonClicked, setButtonClicked] = useState(false);
+  const { selectedConversation } = useAppSelector(state => state.conversation);
+  const { id: my_id } = useAppSelector(state => state.login);
 
-    request({
-      url: ENDPOINT.CONVERSATION(my_id),
-      methodType: types.POST,
-      data: payload,
-      headers: {
-        Authorization: `Bearer ${Cookies.get('jwt')}`
-      }
-    })?.then(response => {
-      navigate(`${ROUTE.CONVERSATION}/${response.data.id}`);
-    }).catch(() => {
-      toast.error("Woops I think I have done something wrong! :(");
-    });
-  }
+  const handleUserClick = () => {
+    if (isMessageItem) {
+      const payload = {
+        name: name,
+        is_group: false,
+        members: [id, my_id],
+        last_message: '',
+        last_message_date: (new Date()).toISOString(),
+      };
+      dispatch(createConversation(payload));
 
-  const handleClick = () => {
-    isMessageItem && createConversation();
+      setButtonClicked(true);
+    }
     onButtonClick && onButtonClick();
-  }
+  };
+
+  useEffect(() => {
+    if (isButtonClicked) {
+      navigate(`${ROUTE.CONVERSATION}/${selectedConversation.id}`);
+    }
+  }, [selectedConversation.id]);
 
   return (
     <S.Wrapper>
@@ -72,12 +72,12 @@ const User: FC<UserProps> = ({
         <S.Name>{name}</S.Name>
       </S.NameContainer>
       <Button
-        onClick={handleClick}
+        onClick={handleUserClick}
         icon={isMessageItem ? Message : (isAdded ? Remove : Add)}
         color={isAdded ? ButtonColor.green : ButtonColor.blue}
       />
     </S.Wrapper>
-  )
-}
+  );
+};
 
 export default User;

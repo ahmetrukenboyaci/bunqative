@@ -1,84 +1,68 @@
 /** Dependencies */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 /** Components */
-import Layout from '../../components/Layout/Layout'
-import Input from '../../components/Input/Input'
-import Button from '../../components/Button/Button'
+import Layout from '../../components/Layout/Layout';
+import Input from '../../components/Input/Input';
+import Button from '../../components/Button/Button';
 
 /** Icons */
 import BunqativeIcon from '../../assets/icons/bunqative.svg';
 
 /** Images */
-import Logo from '../../assets/images/svg/logo-large.svg'
+import Logo from '../../assets/images/svg/logo-large.svg';
 
-/** Utils */
-import { request } from '../../utilities/request'
+/** Constants */
+import { ROUTE } from '../../constants/Routes';
 
-/** constants */
-import { ENDPOINT } from '../../constants/Endpoints'
-import * as types from '../../constants/methodTypes';
+/** Store */
+import { login } from '../../store/slices/login.slice';
 
 /** Styles */
 import * as S from './Login.styled';
-import { useNavigate } from 'react-router-dom'
-import { ROUTE } from '../../constants/Routes'
-import { toast } from 'react-toastify'
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 const Login = () => {
   const [username, setUsername] = useState<string>();
   const [password, setPassword] = useState<string>();
 
+  const { id: my_id } = useAppSelector(state => state.login);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleUsernameChange = (value: string) => {
     setUsername(value);
-  }
+  };
 
   const handlePasswordChange = (value: string) => {
     setPassword(value);
-  }
+  };
 
   const handleSubmit = async () => {
-    toast.info("Wait until the gates are open!", {
-      toastId: 'toast_id'
-    });
-
     const payload = {
-      username,
-      password
-    }
+      name: username,
+      password,
+    };
 
     navigate(ROUTE.ROOT);
 
-    request({
-      url: ENDPOINT.LOGIN,
-      data: payload,
-      methodType: types.POST
-    })?.then(response => {
-      Cookies.set('jwt', response.data.token);
-
-      toast.dismiss('toast_id');
-      toast.success("The gates are successfully opened!");
-
-      navigate(ROUTE.ROOT);
-      window.location.reload();
-    }).catch(() => {
-      toast.dismiss('toast_id');
-      toast.error("Who are you stranger!");
-    });
-  }
+    dispatch(login(payload));
+  };
 
   useEffect(() => {
-    if(!!Cookies.get('jwt')) {
+    if (!!my_id) {
       navigate(ROUTE.ROOT);
     }
-  }, []);
+  }, [my_id]);
 
   return (
     <Layout header={'Login'}>
-      <S.Logo src={Logo} alt={'logo'} />
+      <S.Logo src={Logo} alt={'logo'}/>
       <S.FormContainer>
         <Input
           onChange={handleUsernameChange}
@@ -98,10 +82,10 @@ const Login = () => {
         />
       </S.FormContainer>
       <S.ButtonContainer>
-        <Button onClick={handleSubmit} icon={BunqativeIcon} text={'Login'} />
+        <Button onClick={handleSubmit} icon={BunqativeIcon} text={'Login'}/>
       </S.ButtonContainer>
     </Layout>
-  )
-}
+  );
+};
 
 export default Login;

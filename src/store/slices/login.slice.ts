@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState: { id: number, username: string, password: string, token: string, isLoading: boolean } = {
-  id: 1,
-  username: '',
+const initialState: { id: number | null, name: string, password: string, last_seen_at: string, isLoading: boolean } = {
+  id: null,
+  name: '',
   password: '',
-  token: '',
-  isLoading: false
+  last_seen_at: '',
+  isLoading: false,
 };
 
 const loginSlice = createSlice({
@@ -13,23 +13,24 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
-      state.username = action.payload.username;
-      state.username = action.payload.password;
       state.isLoading = true;
     },
     loginSuccess: (state, action) => {
-      state.username = action.payload.token;
+      state.id = action.payload.id;
+      state.name = action.payload.name;
+      state.password = action.payload.password;
+      state.last_seen_at = action.payload.last_seen_at;
       state.isLoading = false;
     },
     loginFail: (state) => {
       state.isLoading = false;
     },
-  }
+  },
 });
 
 export const {
   login,
   loginSuccess,
-  loginFail
+  loginFail,
 } = loginSlice.actions;
 export default loginSlice.reducer;

@@ -1,6 +1,4 @@
 import moment from 'moment';
-import Cookies from 'js-cookie'
-import jwt_decode from 'jwt-decode'
 
 export const convertDate = (date: string): string => {
   const second = 1000;
@@ -16,14 +14,14 @@ export const convertDate = (date: string): string => {
   const msToNow = now - then;
 
   if (msToNow / week >= 1)
-    return moment(date).format('DD.MM.YYYY')
+    return moment(date).format('DD.MM.YYYY');
   else if (msToNow / day >= 1)
-    return moment(date).format('ddd')
+    return moment(date).format('ddd');
   else if (msToNow / hour >= 1)
-    return moment(date).format('HH[:]MM')
+    return moment(date).format('HH[:]MM');
   else
-    return moment(date).format('HH[:]MM')
-}
+    return moment(date).format('HH[:]MM');
+};
 
 export const convertMessageDate = (date: string): string => {
   const second = 1000;
@@ -41,22 +39,15 @@ export const convertMessageDate = (date: string): string => {
   const msToNow = now - then;
 
   if (msToNow / year >= 1)
-    return moment(date).format('yy')
+    return moment(date).format('yy');
   else if (msToNow / month >= 1)
-    return moment(date).format('MMM yy')
+    return moment(date).format('MMM yy');
   else if (msToNow / week >= 1)
-    return moment(date).format('ddd DD MMM')
+    return moment(date).format('ddd DD MMM');
   else if (msToNow / day >= 1)
-    return moment(date).format('ddd')
+    return moment(date).format('ddd');
   else if (msToNow / hour >= 1)
-    return moment(date).format('HH[:]MM')
+    return moment(date).format('HH[:]MM');
   else
-    return moment(date).format('HH[:]MM')
-}
-
-export const getMyId = () => {
-  const token = Cookies?.get('jwt') || '';
-  // const decoded: { name: string, id: number } = jwt_decode(token);
-
-  return 1;
-}
+    return moment(date).format('HH[:]MM');
+};

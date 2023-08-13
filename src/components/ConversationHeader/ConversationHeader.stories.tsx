@@ -1,8 +1,8 @@
-import type { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryFn } from '@storybook/react';
 
 import ConversationHeader from './ConversationHeader';
-import { BrowserRouter } from 'react-router-dom'
-import { ConversationHeaderProps } from './ConversationHeader.types'
+import { BrowserRouter } from 'react-router-dom';
+import { ConversationHeaderProps } from './ConversationHeader.types';
 
 const meta = {
   title: 'Components/ConversationHeader',
@@ -25,7 +25,7 @@ const Template: StoryFn<ConversationHeaderProps> = (args) => (
 export const OneToOne = Template.bind({});
 
 OneToOne.args = {
-  users: [1]
+  users: [1],
 };
 
 export const Group = Template.bind({});
@@ -37,6 +37,6 @@ Group.args = {
     3,
     4,
     5,
-    6
-  ]
+    6,
+  ],
 };

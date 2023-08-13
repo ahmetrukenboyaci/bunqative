@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
 
 /** Constants */
 import { ROUTE } from '../../constants/Routes';
@@ -37,31 +37,27 @@ const Home = () => {
     useState<ConversationType[]>();
 
   const sortedConversations = () => {
-    if (conversations?.length)
-      return conversations.sort((conversationA, conversationB) => {
+    if (conversations?.length > 1)
+      return [...conversations].sort((conversationA, conversationB) => {
         // @ts-ignore
-        return (new Date(conversationB.last_seen_at)) - (new Date(conversationA.last_seen_at))
+        return (new Date(conversationB.last_message_date)) - (new Date(conversationA.last_message_date));
       });
-    return [];
-  }
+    return conversations;
+  };
 
   const handleSearch = (searchTerm: string) => {
     const searchResult = sortedConversations()
-      .filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    ?.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase())) || [];
 
     if (searchTerm.length <= 0)
       setConversationsSearchResult(sortedConversations());
     else
       setConversationsSearchResult(searchResult);
-  }
+  };
 
   useEffect(() => {
-    toast.info("Wait until your friends come!", {
-      toastId: 'toast_id'
-    });
-
-    dispatch(fetchConversations())
-  }, [])
+    dispatch(fetchConversations());
+  }, []);
 
   useEffect(() => {
     handleSearch('');
@@ -75,11 +71,11 @@ const Home = () => {
           placeholder={'search...'}
           type={'search'}
         />
-        <Button onClick={() => navigate(ROUTE.CREATE_CHAT)} icon={Add} />
+        <Button onClick={() => navigate(ROUTE.CREATE_CHAT)} icon={Add}/>
       </S.SearchBarContainer>
       <S.GroupsContainer>
         <S.GroupsTitle>Chatrooms</S.GroupsTitle>
-        <GroupSlider groups={groups} />
+        <GroupSlider groups={groups}/>
       </S.GroupsContainer>
       <S.ConversationsList>
         {conversationsSearchResult?.map(conversation => (
@@ -93,7 +89,7 @@ const Home = () => {
         ))}
       </S.ConversationsList>
     </Layout>
-  )
-}
+  );
+};
 
 export default Home;

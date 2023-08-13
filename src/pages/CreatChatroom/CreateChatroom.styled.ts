@@ -26,6 +26,8 @@ const CreateChatroomFormTitle = styled.div`
 
 const CreateChatroomUsersList = styled.div`
   display: grid;
+  grid-auto-rows: max-content;
+  height: 100%;
   margin-top: ${({ theme }) => theme.convertPxToVw(25)};
   margin-bottom: ${({ theme }) => theme.convertPxToVw(25)};
   gap: ${({ theme }) => theme.convertPxToVw(25)};

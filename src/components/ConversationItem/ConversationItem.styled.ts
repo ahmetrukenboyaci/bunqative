@@ -13,7 +13,7 @@ const ConversationItemWrapper = styled(Link)`
 const ConversationItemInitialContainer = styled.div`
   position: relative;
   height: 100%;
-  width: ${({ theme }) => theme.convertPxToVw(54)};
+  width: ${({ theme }) => theme.convertPxToVw(45)};
 `;
 
 const ConversationItemInitial = styled.div`
@@ -23,8 +23,8 @@ const ConversationItemInitial = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: ${({ theme }) => theme.convertPxToVw(34)};
-  width: ${({ theme }) => theme.convertPxToVw(34)};
+  height: ${({ theme }) => theme.convertPxToVw(45)};
+  width: ${({ theme }) => theme.convertPxToVw(45)};
   background-color: ${({ theme }) => theme.color.shipCove};
   border-radius: 50%;
 

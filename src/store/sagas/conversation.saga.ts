@@ -6,17 +6,16 @@ import {
   fetchConversation,
   fetchConversationFail,
   fetchConversations, fetchConversationsFail, fetchConversationsSuccess, fetchConversationSuccess,
-} from '../slices/conversation.slice'
-import { request } from '../../utilities/request'
-import { ConversationType } from '../../pages/types/types'
-import { PayloadAction } from '@reduxjs/toolkit'
+} from '../slices/conversation.slice';
+import { request } from '../../utilities/request';
+import { ConversationType } from '../../pages/types/types';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 export function* getConversations() {
   try {
     const {
-      id: my_id
+      id: my_id,
     } = yield select((state) => state.login);
-
 
 
     const conversationsData: { data: ConversationType[] } = yield request({
@@ -29,16 +28,14 @@ export function* getConversations() {
       groups: Object.values(conversationsData.data).filter((conv: ConversationType) => conv.is_group),
     }));
   } catch (e) {
-    console.log(e)
     yield put(fetchConversationsFail());
   }
 }
 
 export function* getConversation(action: PayloadAction<{ id: number }>) {
   try {
-    console.log(action.payload.id)
     const {
-      id: my_id
+      id: my_id,
     } = yield select((state) => state.login);
 
     const conversationsData: { data: ConversationType[] } = yield request({
@@ -46,7 +43,7 @@ export function* getConversation(action: PayloadAction<{ id: number }>) {
       methodType: types.GET,
     });
 
-    yield put(fetchConversationSuccess(Object.values(conversationsData.data)));
+    yield put(fetchConversationSuccess(conversationsData.data));
   } catch (e) {
     yield put(fetchConversationFail());
   }
@@ -61,7 +58,7 @@ export function* postConversation(action: PayloadAction<{
 }>) {
   try {
     const {
-      id: my_id
+      id: my_id,
     } = yield select((state) => state.login);
 
     const payload = {
@@ -69,8 +66,8 @@ export function* postConversation(action: PayloadAction<{
       is_group: action.payload.is_group,
       members: action.payload.members,
       last_message: action.payload.last_message,
-      last_message_date: action.payload.last_message_date
-    }
+      last_message_date: action.payload.last_message_date,
+    };
 
     const conversationData: { data: ConversationType } = yield request({
       url: ENDPOINT.CONVERSATION_MANY(my_id),
@@ -78,7 +75,7 @@ export function* postConversation(action: PayloadAction<{
       methodType: types.POST,
     });
 
-    yield put(createConversationSuccess(Object.values(conversationData.data)));
+    yield put(createConversationSuccess(conversationData.data));
   } catch (e) {
     yield put(createConversationFail());
   }

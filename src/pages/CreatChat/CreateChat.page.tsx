@@ -42,26 +42,22 @@ const CreateChat = () => {
 
   const handleSearch = (searchTerm: string) => {
     const searchResult = users
-    .filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    ?.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase())) || [];
 
     if (searchTerm.length <= 0)
       setUsersSearchResult(users);
     else
       setUsersSearchResult(searchResult);
-  }
+  };
 
   const handleUsersButtonClick = () => {
     navigate(ROUTE.CREATE_GROUP);
-  }
+  };
 
   useEffect(() => {
-    toast.info("Wait until your friends come!", {
-      toastId: 'toast_id'
-    });
-
-    dispatch(fetchConversations())
-    dispatch(fetchUsers())
-  }, [])
+    dispatch(fetchConversations());
+    dispatch(fetchUsers());
+  }, []);
 
   useEffect(() => {
     handleSearch('');
@@ -75,11 +71,11 @@ const CreateChat = () => {
           placeholder={'search...'}
           type={'search'}
         />
-        <Button onClick={handleUsersButtonClick} icon={Users} />
+        <Button onClick={handleUsersButtonClick} icon={Users}/>
       </S.SearchBarContainer>
       <S.GroupsContainer>
         <S.GroupsTitle>Chatrooms</S.GroupsTitle>
-        <GroupSlider groups={groups} />
+        <GroupSlider groups={groups}/>
       </S.GroupsContainer>
       <S.UsersList>
         {usersSearchResult?.length && usersSearchResult.map(user => (
@@ -91,7 +87,7 @@ const CreateChat = () => {
         ))}
       </S.UsersList>
     </Layout>
-  )
-}
+  );
+};
 
 export default CreateChat;
