@@ -2,7 +2,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import useWebSocket from 'react-use-websocket';
 import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 
 /** Components */
@@ -38,6 +37,7 @@ const ChatBox = () => {
     lastJsonMessage,
   } = useWebSocket(process.env.REACT_APP_SOCKET_URL || '', {
     onOpen: () => console.log('opened'),
+    queryParams: { conversationId: selectedConversation.id },
     shouldReconnect: () => true,
   });
 

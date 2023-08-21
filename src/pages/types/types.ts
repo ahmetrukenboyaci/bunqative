@@ -7,7 +7,7 @@ interface UserType {
 interface ConversationType {
   id: number;
   name: string;
-  members: number[];
+  members: UserType[];
   last_message: string;
   last_message_date: string;
   is_group?: boolean;

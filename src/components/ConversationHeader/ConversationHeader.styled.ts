@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ConversationHeaderIsGroup } from './ConversationHeader.types';
+import { ConversationHeaderInitialProps, ConversationHeaderIsGroup } from './ConversationHeader.types';
 
 const ConversationHeaderWrapper = styled.div<ConversationHeaderIsGroup>`
   position: relative;
@@ -33,7 +33,8 @@ const ConversationHeaderUserName = styled.div`
   text-transform: capitalize;
 `;
 
-const ConversationHeaderInitial = styled.div<ConversationHeaderIsGroup>`
+const ConversationHeaderInitial = styled.div<ConversationHeaderInitialProps>`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,10 +48,28 @@ const ConversationHeaderInitial = styled.div<ConversationHeaderIsGroup>`
   font-family: Roboto, serif;
   font-size: ${({ theme }) => theme.convertPxToVw(15)};
   letter-spacing: ${({ theme }) => theme.convertPxToVw(1)};
+  cursor: pointer;
   text-transform: uppercase;
 
   &:nth-child(2n) {
     margin-top: ${({ theme, isGroup }) => theme.convertPxToVw(isGroup ? 10 : 0)};
+  }
+
+  &:hover {
+    &:before {
+      content: attr(text);
+      position: absolute;
+      top: calc(100% + ${({ theme }) => theme.convertPxToVw(4)});
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      padding: ${({ theme }) => theme.convertPxToVw(6)};
+      background-color: ${({ theme }) => theme.color.charade};
+      border-radius: ${({ theme }) => theme.convertPxToVw(4)};
+
+      font-size: ${({ theme }) => theme.convertPxToVw(12)};
+      text-transform: capitalize;
+    }
   }
 `;
 

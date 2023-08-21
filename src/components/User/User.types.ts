@@ -1,5 +1,7 @@
+import { UserType } from '../../pages/types/types';
+
 interface UserProps {
-  id: number;
+  user: UserType;
   name: string;
   isMessageItem?: boolean;
   isAdded?: boolean;

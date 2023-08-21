@@ -16,19 +16,19 @@ import BunqativeIcon from '../../assets/icons/bunqative.svg';
 
 /** Store */
 import { createConversation } from '../../store/slices/conversation.slice';
+import { fetchUsers } from '../../store/slices/user.slice';
 
 /** Types */
 import { UserType } from '../types/types';
 
 /** Styles */
 import * as S from './CreateChatroom.styled';
-import { fetchUsers } from '../../store/slices/user.slice';
 
 const CreateChatroom = () => {
   const dispatch = useDispatch();
 
   const { users } = useAppSelector(state => state.user);
-  const { id: my_id } = useAppSelector(state => state.login);
+  const loginData = useAppSelector(state => state.login);
 
   const [conversationName, setConversationName] = useState<string>();
   const [selectedUsers, setSelectedUsers] = useState<UserType[]>();
@@ -59,12 +59,12 @@ const CreateChatroom = () => {
   };
 
   const handleCreateClick = () => {
-    const members = selectedUsers?.map((selectedUser) => selectedUser.id) ?? [];
+    const members = selectedUsers?.map((conversationUser) => conversationUser) ?? [];
 
     const payload = {
       name: conversationName,
       is_group: true,
-      members: [...members, my_id],
+      members: [...members, loginData],
       last_message: '',
       last_message_date: (new Date()).toISOString(),
     };
@@ -102,7 +102,7 @@ const CreateChatroom = () => {
         {usersSearchResult.map(user => (
           <User
             key={user.id}
-            id={user.id}
+            user={user}
             name={user.name}
             isMessageItem={false}
             isAdded={selectedUsers?.some(sUser => sUser.id === user.id)}

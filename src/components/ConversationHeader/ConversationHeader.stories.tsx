@@ -25,18 +25,46 @@ const Template: StoryFn<ConversationHeaderProps> = (args) => (
 export const OneToOne = Template.bind({});
 
 OneToOne.args = {
-  users: [1],
+  users: [{
+    id: 1,
+    name: 'Bożenka Malina',
+    last_seen_at: (new Date()).toISOString(),
+  }],
 };
 
 export const Group = Template.bind({});
 
 Group.args = {
   users: [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
+    {
+      id: 1,
+      name: 'Bożenka Malina',
+      last_seen_at: (new Date()).toISOString(),
+    },
+    {
+      id: 2,
+      name: 'Bożenka Malina',
+      last_seen_at: (new Date()).toISOString(),
+    },
+    {
+      id: 3,
+      name: 'Bożenka Malina',
+      last_seen_at: (new Date()).toISOString(),
+    },
+    {
+      id: 4,
+      name: 'Bożenka Malina',
+      last_seen_at: (new Date()).toISOString(),
+    },
+    {
+      id: 5,
+      name: 'Bożenka Malina',
+      last_seen_at: (new Date()).toISOString(),
+    },
+    {
+      id: 6,
+      name: 'Bożenka Malina',
+      last_seen_at: (new Date()).toISOString(),
+    },
   ],
 };

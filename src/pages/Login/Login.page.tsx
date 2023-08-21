@@ -66,7 +66,7 @@ const Login = () => {
       <S.FormContainer>
         <Input
           onChange={handleUsernameChange}
-          onEnter={() => console.log('')}
+          onEnter={handleSubmit}
           placeholder={'Enter your username'}
           label={'Username'}
           defaultValue={username}
@@ -74,7 +74,7 @@ const Login = () => {
         />
         <Input
           onChange={handlePasswordChange}
-          onEnter={() => console.log('')}
+          onEnter={handleSubmit}
           placeholder={'Enter your password'}
           label={'Password'}
           defaultValue={password}

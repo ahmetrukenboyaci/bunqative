@@ -6,8 +6,12 @@ interface MessageProps {
   isInGroup?: boolean;
 }
 
+interface InitialProps {
+  text: string;
+}
+
 interface MessageOwnerProps {
   isMine?: boolean;
 }
 
-export type { MessageProps, MessageOwnerProps };
+export type { MessageProps, MessageOwnerProps, InitialProps };

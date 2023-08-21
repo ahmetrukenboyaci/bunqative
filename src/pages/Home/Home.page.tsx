@@ -32,6 +32,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const { conversations, groups } = useAppSelector(state => state.conversation);
+  const loginData = useAppSelector(state => state.login);
 
   const [conversationsSearchResult, setConversationsSearchResult] =
     useState<ConversationType[]>();
@@ -64,7 +65,7 @@ const Home = () => {
   }, [conversations]);
 
   return (
-    <Layout header={'Ahmet Ruken'}>
+    <Layout header={loginData.name}>
       <S.SearchBarContainer>
         <Input
           onChange={handleSearch}
@@ -82,7 +83,7 @@ const Home = () => {
           <ConversationItem
             key={conversation.id}
             id={conversation.id}
-            name={conversation.name}
+            name={conversation.is_group ? conversation.name : (conversation.members.find(member => member.id !== loginData.id)?.name ?? '')}
             lastMessage={conversation.last_message}
             date={conversation.last_message_date}
           />

@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
+import { UserType } from '../../pages/types/types';
 
 interface LayoutProps {
   header?: string;
-  users?: number[];
+  users?: UserType[];
   isConversation?: boolean;
   children: ReactNode;
 }

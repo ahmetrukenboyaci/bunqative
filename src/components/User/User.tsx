@@ -28,7 +28,7 @@ import Remove from '../../assets/icons/remove.svg';
 import * as S from './User.styled';
 
 const User: FC<UserProps> = ({
-                               id,
+                               user,
                                name,
                                isMessageItem = true,
                                isAdded = false,
@@ -39,14 +39,14 @@ const User: FC<UserProps> = ({
 
   const [isButtonClicked, setButtonClicked] = useState(false);
   const { selectedConversation } = useAppSelector(state => state.conversation);
-  const { id: my_id } = useAppSelector(state => state.login);
+  const loginData = useAppSelector(state => state.login);
 
   const handleUserClick = () => {
     if (isMessageItem) {
       const payload = {
         name: name,
         is_group: false,
-        members: [id, my_id],
+        members: [user, loginData],
         last_message: '',
         last_message_date: (new Date()).toISOString(),
       };

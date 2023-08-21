@@ -1,9 +1,16 @@
+import { UserType } from '../../pages/types/types';
+
 interface ConversationHeaderProps {
-  users: number[];
+  users: UserType[];
 }
 
 type ConversationHeaderIsGroup = {
   isGroup: boolean;
 }
 
-export type { ConversationHeaderProps, ConversationHeaderIsGroup };
+type ConversationHeaderInitialProps = {
+  isGroup: boolean;
+  text: string;
+}
+
+export type { ConversationHeaderProps, ConversationHeaderIsGroup, ConversationHeaderInitialProps };

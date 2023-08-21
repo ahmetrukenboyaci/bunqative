@@ -10,6 +10,7 @@ import CreateChatroomPage from './pages/CreatChatroom/CreateChatroom.page';
 import LoginPage from './pages/Login/Login.page';
 import ChatBoxPage from './pages/ChatBox/ChatBox.page';
 import { useAppSelector } from './hooks/useAppSelector';
+import { isUserLoggedIn } from './store/slices/login.slice';
 
 const browserRouter = (isUserLoggedIn: boolean, hasUserAnyConversation: boolean): ReturnType<typeof createBrowserRouter> =>
   createBrowserRouter(isUserLoggedIn ? [
@@ -42,12 +43,12 @@ const browserRouter = (isUserLoggedIn: boolean, hasUserAnyConversation: boolean)
   ]);
 
 const AppRouter: React.FC = () => {
-  const { id } = useAppSelector(state => state.login);
+  const isLoggedIn = useAppSelector(isUserLoggedIn);
   const { conversations } = useAppSelector(state => state.conversation);
 
   const hasUserAnyConversation = conversations.length > 0;
 
-  return <RouterProvider router={browserRouter(!!id, hasUserAnyConversation)}/>;
+  return <RouterProvider router={browserRouter(isLoggedIn, hasUserAnyConversation)}/>;
 };
 
 export default AppRouter;

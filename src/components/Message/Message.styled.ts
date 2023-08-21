@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { MessageOwnerProps } from './Message.types';
+import { MessageOwnerProps, InitialProps } from './Message.types';
 
 const MessageWrapper = styled.div<MessageOwnerProps>`
   position: relative;
@@ -22,7 +22,7 @@ const MessageText = styled.div`
   letter-spacing: ${({ theme }) => theme.convertPxToVw(1)};
 `;
 
-const MessageInitial = styled.div`
+const MessageInitial = styled.div<InitialProps>`
   position: absolute;
   bottom: 0;
   display: flex;
@@ -33,11 +33,29 @@ const MessageInitial = styled.div`
   width: ${({ theme }) => theme.convertPxToVw(24)};
   background-color: ${({ theme }) => theme.color.shipCove};
   border-radius: 50%;
+  cursor: pointer;
 
   color: ${({ theme }) => theme.color.white};
   font-family: Roboto, serif;
   font-size: ${({ theme }) => theme.convertPxToVw(15)};
   letter-spacing: ${({ theme }) => theme.convertPxToVw(1)};
+  text-transform: uppercase;
+
+  &:hover {
+    &:before {
+      content: attr(text);
+      position: absolute;
+      top: 0;
+      left: calc(100% + ${({ theme }) => theme.convertPxToVw(4)});
+      z-index: 1;
+      padding: ${({ theme }) => theme.convertPxToVw(6)};
+      background-color: ${({ theme }) => theme.color.charade};
+      border-radius: ${({ theme }) => theme.convertPxToVw(4)};
+
+      font-size: ${({ theme }) => theme.convertPxToVw(12)};
+      text-transform: capitalize;
+    }
+  }
 `;
 
 const MessageDate = styled.div<MessageOwnerProps>`

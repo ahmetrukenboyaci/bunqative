@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const PageHeaderWrapper = styled.div`
   position: relative;
@@ -8,18 +8,15 @@ const PageHeaderWrapper = styled.div`
   height: ${({ theme }) => theme.convertPxToVw(45)};
   width: 100%;
   padding-bottom: ${({ theme }) => theme.convertPxToVw(10)};
-`
+`;
 
 const PageHeaderLogo = styled.img`
   position: relative;
   height: ${({ theme }) => theme.convertPxToVw(45)};
   width: ${({ theme }) => theme.convertPxToVw(45)};
   cursor: pointer;
-  box-shadow: ${({ theme }) => 
-    theme.convertPxToVw(20)}
-    ${({ theme }) => theme.convertPxToVw(24)}
-    ${({ theme }) => theme.convertPxToVw(34)} 
-    0 rgba(0, 0, 0, 0.45);
+  box-shadow: ${({ theme }) =>
+          theme.convertPxToVw(20)} ${({ theme }) => theme.convertPxToVw(24)} ${({ theme }) => theme.convertPxToVw(34)} 0 rgba(0, 0, 0, 0.45);
 `;
 
 const PageHeaderNameContainer = styled.div`
@@ -36,10 +33,15 @@ const PageHeaderName = styled.div`
   text-transform: capitalize;
 `;
 
+const PageHeaderLogOut = styled.img`
+  width: ${({ theme }) => theme.convertPxToVw(30)};
+  cursor: pointer;
+`;
 
 export {
   PageHeaderWrapper as Wrapper,
   PageHeaderNameContainer as NameContainer,
   PageHeaderName as Name,
   PageHeaderLogo as Logo,
-}
+  PageHeaderLogOut as Logout,
+};

@@ -1,8 +1,8 @@
-import type { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryFn } from '@storybook/react';
 
 import User from './User';
-import { BrowserRouter } from 'react-router-dom'
-import { UserProps } from './User.types'
+import { BrowserRouter } from 'react-router-dom';
+import { UserProps } from './User.types';
 
 const meta = {
   title: 'Components/User',
@@ -25,6 +25,9 @@ const Template: StoryFn<UserProps> = (args) => (
 export const Default = Template.bind({});
 
 Default.args = {
-  id: 9,
-  name: 'Bożenka Malina',
+  user: {
+    id: 9,
+    name: 'Bożenka Malina',
+    last_seen_at: (new Date()).toISOString(),
+  },
 };

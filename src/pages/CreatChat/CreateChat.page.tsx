@@ -36,6 +36,7 @@ const CreateChat = () => {
 
   const { groups } = useAppSelector(state => state.conversation);
   const { users } = useAppSelector(state => state.user);
+  const { name } = useAppSelector(state => state.login);
 
   const [usersSearchResult, setUsersSearchResult] =
     useState<UserType[]>();
@@ -64,7 +65,7 @@ const CreateChat = () => {
   }, [users]);
 
   return (
-    <Layout header={'Ahmet Ruken'}>
+    <Layout header={name}>
       <S.SearchBarContainer>
         <Input
           onChange={handleSearch}
@@ -78,10 +79,10 @@ const CreateChat = () => {
         <GroupSlider groups={groups}/>
       </S.GroupsContainer>
       <S.UsersList>
-        {usersSearchResult?.length && usersSearchResult.map(user => (
+        {!!usersSearchResult?.length && usersSearchResult.map(user => (
           <User
             key={user.id}
-            id={user.id}
+            user={user}
             name={user.name}
           />
         ))}

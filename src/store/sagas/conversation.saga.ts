@@ -8,7 +8,7 @@ import {
   fetchConversations, fetchConversationsFail, fetchConversationsSuccess, fetchConversationSuccess,
 } from '../slices/conversation.slice';
 import { request } from '../../utilities/request';
-import { ConversationType } from '../../pages/types/types';
+import { ConversationType, UserType } from '../../pages/types/types';
 import { PayloadAction } from '@reduxjs/toolkit';
 
 export function* getConversations() {
@@ -52,7 +52,7 @@ export function* getConversation(action: PayloadAction<{ id: number }>) {
 export function* postConversation(action: PayloadAction<{
   name: string;
   is_group: boolean;
-  members: number[];
+  members: UserType[];
   last_message: string;
   last_message_date: string;
 }>) {
